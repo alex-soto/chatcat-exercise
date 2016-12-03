@@ -3,6 +3,8 @@ const express = require('express');
 const app = express();
 
 app.set('port', process.env.PORT || 3000);
+app.set('views','./views'); // NOTE: This is the setting by default
+app.set('view engine', 'ejs');
 
 // Middleware functions
 let helloMiddleware = (req, res, next) => {
@@ -10,15 +12,9 @@ let helloMiddleware = (req, res, next) => {
 	next(); // Pass control to the next middleware function
 };
 
-app.use('/dashboard',helloMiddleware);
-
-// Create routes
 app.get('/', (req, res, next) => {
-	res.send('<h1>Hello Express!</h1>');
-	console.log(req.hello);
-});
-app.get('/dashboard', (req, res, next) => {
-	res.send('<h1>This is the dashboard page! Middleware says: ' + req.hello + '</h1>');
+	//res.sendFile(__dirname + '/views/login.htm');
+	res.render('login');
 });
 
 app.listen(app.get('port'), () => {
