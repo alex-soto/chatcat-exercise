@@ -16,6 +16,8 @@ let helloMiddleware = (req, res, next) => {
 };
 */
 
+app.use(chatCat.session);
+
 app.use('/', chatCat.router);
 
 app.listen(app.get('port'), () => {
