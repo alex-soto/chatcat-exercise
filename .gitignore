@@ -10,4 +10,4 @@ build/Release
 node_modules
 
 # Authorization data
-*/config/development.json
+./app/config/development.json
