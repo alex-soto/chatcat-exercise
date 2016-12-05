@@ -1,5 +1,6 @@
 'use strict';
 const router = require('express').Router();
+const db = require('../db');
 
 // Iterate through the routes object and mount the routes
 let _registerRoutes = (routes, method) => {
@@ -24,6 +25,16 @@ let route = routes => {
 	_registerRoutes(routes);
 	return router;
 }
+
+// Find a single user (MongoDB document) based on a key
+let findOne = profileID => {
+	return db.userModel.findOne({
+		'profileId': profileID
+	});
+}
+
+// Create new user in db, then return that instance
+
 
 module.exports = {
 	route // ES6 shorthand - used when key and value are the same
