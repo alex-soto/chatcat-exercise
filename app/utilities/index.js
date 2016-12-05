@@ -34,8 +34,26 @@ let findOne = profileID => {
 }
 
 // Create new user in db, then return that instance
-
+let createNewUser = profile => {
+	return new Promise((resolve, reject) => {
+		let newChatUser = new db.userModel({
+			profileId: profile.id,
+			fullName: profile.displayName,
+			profilePic: profile.photos[0].value || ''
+		});
+		
+		newChatUser.save(error => {
+			if(error){
+				reject(error);
+			} else {
+				resolve(newChatUser);
+			}
+		});
+	});
+};
 
 module.exports = {
-	route // ES6 shorthand - used when key and value are the same
+	route, // ES6 shorthand - used when key and value are the same
+	findOne,
+	createNewUser
 }

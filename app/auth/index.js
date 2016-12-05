@@ -15,6 +15,9 @@ module.exports = () => {
 					done(null, result) // done() params: err, mongoDB result
 				} else { // else if user data not found, create user in db
 					// Create new user and return
+					util.createNewUser(profile)
+						.then(newChatUser => done(null, newChatUser))
+						.catch(error => console.log("Error when creating new user"));
 				}
 				
 			});
