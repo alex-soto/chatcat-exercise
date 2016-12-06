@@ -2,7 +2,7 @@
 const passport = require('passport');
 const config = require('../config');
 const util = require('../utilities');
-const FacebookStrategy = require('passport-facebook').strategy;
+const FacebookStrategy = require('passport-facebook').Strategy;
 
 module.exports = () => {
 	passport.serializeUser((user, done) => {

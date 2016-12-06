@@ -1,5 +1,6 @@
 'use strict';
-const routeUtil = require('../utilities');
+const util = require('../utilities');
+const passport = require('passport');
 
 module.exports = () => {
 	let routes = {
@@ -19,7 +20,12 @@ module.exports = () => {
 			'/setsession': (req, res, next) => {
 				req.session.favColor = "blue";
 				res.send("Session set");
-			}
+			},
+			'/auth/facebook': passport.authenticate('facebook'),
+			'/auth/facebook/callback': passport.authenticate('facebook', {
+				successRedirect: '/rooms',
+				failureRedirect: '/'
+			})
 		},
 		'/post': {
 			
@@ -29,5 +35,5 @@ module.exports = () => {
 		}
 	}
 	
-	return routeUtil.route(routes);
+	return util.route(routes);
 };
