@@ -5,6 +5,19 @@ const util = require('../utilities');
 const FacebookStrategy = require('passport-facebook').strategy;
 
 module.exports = () => {
+	passport.serializeUser((user, done) => {
+		done(null, user.id);
+	});
+	
+	passport.deserializeUser((id, done) => {
+		//  Find the user with matching _id
+		util.findById(id)
+			.then(user => {
+				done(null, user);
+			})
+			.catch(error => console.log("Error when deserializing user"));
+	});
+	
 	let authProcessor = (accessToken, refreshToken, profile, done) => {
 		// Find user data in the local db using profile.id
 		// If the user is found, return the user data by invoking done()

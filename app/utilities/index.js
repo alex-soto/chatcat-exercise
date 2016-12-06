@@ -52,8 +52,22 @@ let createNewUser = profile => {
 	});
 };
 
+// ES6 promisified version of findById()
+let findById = id => {
+	return new Promise((resolve, reject) => {
+		db.userModel.findById(id, (error, user) => {
+			if (error){
+				reject(error);
+			} else {
+				resolve(user);
+			}
+		});
+	});
+}
+
 module.exports = {
 	route, // ES6 shorthand - used when key and value are the same
 	findOne,
-	createNewUser
+	createNewUser,
+	findById
 }
