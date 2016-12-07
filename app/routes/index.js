@@ -8,14 +8,16 @@ module.exports = () => {
 			'/': (req, res, next) => {
 				res.render('login');
 			},
-			'/rooms': (req, res, next) => {
+			'/rooms': [util.isAuthenticated, (req, res, next) => {
 				res.render('rooms', {
 					user: req.user
 				});
-			}, 
-			'/chat': (req, res, next) => {
-				res.render('chatroom');
-			},
+			}], 
+			'/chat': [util.isAuthenticated, (req, res, next) => {
+				res.render('chatroom', {
+					user: req.user
+				});
+			}],
 			'/getsession': (req, res, next) => {
 				res.send("My favorite color: " + req.session.favColor);
 			},
