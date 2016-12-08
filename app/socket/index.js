@@ -1,4 +1,4 @@
 'use strict';
-module.exports = (io) => {
-	
+module.exports = (io, app) => {
+	let allrooms = app.locals.chatroom;
 }

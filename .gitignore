@@ -11,3 +11,4 @@ node_modules
 
 # Authorization data
 ./app/config/development.json
+./app/config/development.js
