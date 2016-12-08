@@ -22,5 +22,5 @@ if (process.env.NODE_ENV === 'production'){
 		}
 	}
 } else {
-	module.exports = require('./development.js');
+	module.exports = require('./development.json');
 }

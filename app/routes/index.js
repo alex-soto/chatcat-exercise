@@ -1,6 +1,7 @@
 'use strict';
 const util = require('../utilities');
 const passport = require('passport');
+const config = require('../config');
 
 module.exports = () => {
 	let routes = {
@@ -10,12 +11,14 @@ module.exports = () => {
 			},
 			'/rooms': [util.isAuthenticated, (req, res, next) => {
 				res.render('rooms', {
-					user: req.user
+					user: req.user,
+					host: config.host
 				});
 			}], 
 			'/chat': [util.isAuthenticated, (req, res, next) => {
 				res.render('chatroom', {
-					user: req.user
+					user: req.user,
+					host: config.host
 				});
 			}],
 			'/getsession': (req, res, next) => {
