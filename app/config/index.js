@@ -22,6 +22,5 @@ if (process.env.NODE_ENV === 'production'){
 		}
 	}
 } else {
-	var devConfig = require('./development.js');
-	module.exports = devConfig;
+	module.exports = require('./development.js');
 }
