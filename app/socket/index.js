@@ -32,11 +32,13 @@ module.exports = (io, app) => {
 	
 	io.of('/chatter').on('connection', socket => {
 		socket.on('join', data => {
-			//console.log(data);
 			let usersList = util.addUserToRoom(allrooms, data, socket);
-			
+			// console.log("socket/index.js -> usersList: ", usersList);
 			// Update the list of active users as shown on the chatroom page
-			console.log("usersList: ", usersList);
+			socket.broadcast.to(data.roomID).emit('updateUsersList', JSON.stringify(usersList.users));
+			// Preceding code broadcasts to all users EXCEPT socket that triggered the event
+			// Following code emits event to the socket where the event originated
+			socket.emit('updateUsersList', JSON.stringify(usersList.users));
 		});
 	});
 }
