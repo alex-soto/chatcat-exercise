@@ -140,6 +140,22 @@ let addUserToRoom = (allrooms, data, socket) => {
 	}
 };
 
+// Find and purge user when socket disconnects
+let removeUserFromRoom = (allrooms, socket) => {
+	for(let room of allrooms){
+		// Find the user
+		let findUser = room.users.findIndex((element, index, array) => {
+			return element.socketID === socket.id ? true : false;
+		});
+		
+		if (findUser > -1) {
+			socket.leave(room.roomID);
+			room.users.splice(findUser, 1);
+			return room;
+		}
+	}
+};
+
 module.exports = {
 	route, // ES6 shorthand - used when key and value are the same
 	findOne,
@@ -149,5 +165,6 @@ module.exports = {
 	findRoomByName,
 	randomHex,
 	findRoomByID,
-	addUserToRoom
+	addUserToRoom,
+	removeUserFromRoom
 }

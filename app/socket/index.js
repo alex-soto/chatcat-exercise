@@ -33,12 +33,19 @@ module.exports = (io, app) => {
 	io.of('/chatter').on('connection', socket => {
 		socket.on('join', data => {
 			let usersList = util.addUserToRoom(allrooms, data, socket);
-			// console.log("socket/index.js -> usersList: ", usersList);
+			
 			// Update the list of active users as shown on the chatroom page
 			socket.broadcast.to(data.roomID).emit('updateUsersList', JSON.stringify(usersList.users));
 			// Preceding code broadcasts to all users EXCEPT socket that triggered the event
 			// Following code emits event to the socket where the event originated
 			socket.emit('updateUsersList', JSON.stringify(usersList.users));
+		});
+		
+		// When a socket exits
+		socket.on('disconnect', () => {
+			// Find the room that the socket was connected to, then remove user from that room
+			let room = util.removeUserFromRoom(allrooms, socket);
+			socket.broadcast.to(room.roomID).emit('updateUsersList', JSON.stringify(room.users));
 		});
 	});
 }
