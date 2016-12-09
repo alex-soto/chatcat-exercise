@@ -26,7 +26,7 @@ module.exports = () => {
 						user: req.user,
 						host: config.host,
 						room: getRoom.room,
-						roomID: getRoom.ID
+						roomID: getRoom.roomID
 					});
 				}
 			}],

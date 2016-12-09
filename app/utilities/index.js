@@ -103,6 +103,43 @@ let findRoomByID = (allrooms, roomID) => {
 	});
 }
 
+let addUserToRoom = (allrooms, data, socket) => {
+	// Get the room object
+	let getRoom = findRoomByID(allrooms, data.roomID);
+	if (getRoom !== undefined){
+		// Get the active user's ID (ObjectID as used in session)
+		let userID = socket.request.session.passport.user;
+		// Check to see if the user already exists in the chatroom
+		let checkUser = getRoom.users.findIndex((element, index, array) => {
+			if (element.userID === userID){
+				return true;
+			} else {
+				return false;
+			}
+		});
+		
+		// If user is already present in the room, remove them first
+		if (checkUser > -1){
+			getRoom.users.splice(checkUser, 1);
+		}
+		
+		// Push the user into the room's users array
+		getRoom.users.push({
+			socketID: socket.id,
+			userID,
+			user: data.user,
+			userPic: data.userPic
+		});
+		
+		// Join the room channel
+		socket.join(data.roomID);
+		
+		// Return the updated room object
+		return getRoom;
+		
+	}
+};
+
 module.exports = {
 	route, // ES6 shorthand - used when key and value are the same
 	findOne,
@@ -111,5 +148,6 @@ module.exports = {
 	isAuthenticated,
 	findRoomByName,
 	randomHex,
-	findRoomByID
+	findRoomByID,
+	addUserToRoom
 }
