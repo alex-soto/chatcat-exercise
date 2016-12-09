@@ -14,6 +14,7 @@
 			let renderChatRooms = chatrooms => {
 				let roomsListDiv = $('#roomsListUL');
 				let listStr = '';
+				console.log(chatrooms);
 				for (let cat of chatrooms){
 					listStr += `<a href="/chat/${cat.roomID}"><li>${cat.room}</li></a>`
 				}

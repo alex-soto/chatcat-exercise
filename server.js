@@ -4,8 +4,6 @@ const app = express();
 const chatCat = require('./app');
 const passport = require('passport');
 
-console.log(process.env.host);
-
 app.set('port', process.env.PORT || 3000);
 app.use(express.static('public'));
 app.set('views','./views'); // NOTE: This is the setting by default
